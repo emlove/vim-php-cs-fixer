@@ -82,11 +82,15 @@ fun! php_cs_fixer#fix(path, dry_run)
         endif
 	endif
 
+    let l:winview = winsaveview()
+
     let s:output = system(command)
 
     if a:dry_run != 1
       exec 'edit!'
     endif
+
+    call winrestview(l:winview)
 
     let fix_num = 0
     let errors_report = 0
