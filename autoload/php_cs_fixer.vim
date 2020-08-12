@@ -49,6 +49,12 @@ if exists('g:php_cs_fixer_config_file') && filereadable(g:php_cs_fixer_config_fi
     endif
 endif
 
+if exists('g:php_cs_fixer_path_mode')
+    if g:php_cs_fixer_version >= 2
+        let g:php_cs_fixer_command = g:php_cs_fixer_command . ' --path-mode=' . g:php_cs_fixer_path_mode
+    endif
+endif
+
 if exists('g:php_cs_fixer_cache')
     let g:php_cs_fixer_command = g:php_cs_fixer_command . ' --cache-file=' . g:php_cs_fixer_cache
 endif
@@ -83,6 +89,10 @@ fun! php_cs_fixer#fix(path, dry_run)
 	endif
 
     let l:winview = winsaveview()
+
+    if g:php_cs_fixer_verbose == 1
+        echo command
+    endif
 
     let s:output = system(command)
 
